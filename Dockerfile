@@ -5,4 +5,5 @@ RUN npm install
 COPY . /usr/src/app
 
 EXPOSE 80
-ENTRYPOINT ["ls"]
+ENTRYPOINT ["cd", "/usr/src/app"]
+ENTRYPOINT ["node", "server.js"]

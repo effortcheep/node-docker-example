@@ -1,4 +1,4 @@
-FROM node:12.12.0
+FROM node:12.12.0-alpine
 RUN mkdir -p /usr/src/app
 COPY package.json /usr/src/app
 RUN npm install

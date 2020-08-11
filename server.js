@@ -15,7 +15,7 @@ app.post('/test', (req, res) => {
   var nonce = "aaaaaa";
   var encrypt = encrypt_text('success', 'fhpuqnmo6mw3l1gvo030tiy0kvpido2zje4nxu8tpdn', 'suite7qgj8mrncxv6g4m6')
   var token = 'sdfasfssa'
-  const arr = [timeStamp, nonce, encrypt]
+  const arr = [timeStamp, nonce, token, encrypt]
   const msg_signature = signature_arr(arr)
   res.send({
     msg_signature:msg_signature,

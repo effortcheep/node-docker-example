@@ -15,7 +15,7 @@ app.post('/test', (req, res) => {
   var nonce = "aaaaaa";
   var encrypt = encrypt_text('success', 'fhpuqnmo6mw3l1gvo030tiy0kvpido2zje4nxu8tpdn', 'suite7qgj8mrncxv6g4m6')
   var token = 'sdfasfssa'
-  const arr = [timeStamp, nonce, token, encrypt]
+  const arr = [timeStamp, nonce, encrypt]
   const msg_signature = signature_arr(arr)
   res.send({
     msg_signature:msg_signature,
@@ -27,10 +27,20 @@ app.post('/test', (req, res) => {
 
 app.listen(8080)
 
+function getRandomStr(strLength) {
+  var str = "";
+  var arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+  for (var i = 1; i <= strLength; i++) {
+    var random = Math.floor(Math.random() * arr.length);
+    str += arr[random];
+  }
+  return str;
+}
+
 function encrypt_text(text, aes_key, suiteKey) {
   var key = new Buffer(aes_key + "=", 'base64');
   var iv = key.slice(0, 16);
-  var random_buffer = new Buffer('aaaaaa', 'utf-8');
+  var random_buffer = new Buffer(getRandomStr(16), 'utf-8');
   var buffer = new Buffer(text, 'utf-8');
   var length_buffer = new Buffer(4);
   length_buffer.writeUInt32BE(buffer.length, 0);

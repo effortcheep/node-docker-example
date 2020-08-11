@@ -1,11 +1,11 @@
-const http = require('http')
-const server = http.createServer((req, res) => {
-  res.writeHead(200, {
-    'Content-type': 'text/plain'
+const express = require('express')
+
+const app = express()
+
+app.post('/test', (req, res) => {
+  res.send({
+    successk: 'ok'
   })
-  res.end('hello world')
 })
 
-server.listen(8080, function() {
-  console.log('Docker demo with Node.js is running')
-})
+app.listen(8080)

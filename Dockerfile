@@ -4,4 +4,4 @@ COPY . /usr/src/app
 RUN cd /usr/src/app && npm install
 
 EXPOSE 80
-# ENTRYPOINT ["node", "/usr/src/app/server.js"]
+ENTRYPOINT ["node", "/usr/src/app/server.js"]

@@ -4,6 +4,8 @@ const app = express()
 const crypto = require('crypto');
 const encodingAESKey = "fhpuqnmo6mw3l1gvo030tiy0kvpido2zje4nxu8tpdn"
 const axios = require('axios')
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/ttt', (req, res) => {
   get_suite_token()
@@ -13,7 +15,7 @@ app.get('/ttt', (req, res) => {
 })
 
 app.post('/test', (req, res) => {
-  const param = decryptMsg(req.body)
+  const param = decryptMsg(req.body.encrypt)
   if (param.EventType === 'tmp_auth_code') {
     test_suite(param.AuthCode)
   }

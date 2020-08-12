@@ -36,6 +36,7 @@ app.post('/test', (req, res) => {
 
 function test_suite(tmp_auth_code) {
   const suite_access_token = get_suite_token()
+  console.log(suite_access_token)
   const permanentData = get_permanent_code(suite_access_token, tmp_auth_code)
   const res = activate_suite(suite_access_token, permanentData.permanent_code, permanentData.auth_corp_info.auth_corpid)
   console.log(res)
@@ -50,7 +51,7 @@ async function get_suite_token() {
 // 企业永久授权码
 async function get_permanent_code(suite_access_token, tmp_auth_code) {
   const res = await axios.post(`https://oapi.dingtalk.com/service/get_permanent_code?suite_access_token=${suite_access_token}`, {"tmp_auth_code": tmp_auth_code})
-  console.log(res)
+  console.log(res.data)
   return res.data
 }
 

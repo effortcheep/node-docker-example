@@ -8,7 +8,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.get('/ttt', (req, res) => {
-  get_suite_token()
+  test_suite('123')
   res.send({
     success: 'ok'
   })
@@ -34,17 +34,25 @@ app.post('/test', (req, res) => {
   })
 })
 
-function test_suite(tmp_auth_code) {
-  const suite_access_token = get_suite_token()
-  console.log(suite_access_token)
-  const permanentData = get_permanent_code(suite_access_token, tmp_auth_code)
-  const res = activate_suite(suite_access_token, permanentData.permanent_code, permanentData.auth_corp_info.auth_corpid)
+async function test_suite(tmp_auth_code) {
+  // const suite_access_token = get_suite_token()
+  const tokenRes = await axios.post('https://oapi.dingtalk.com/service/get_suite_token', {"suite_key": "suite7qgj8mrncxv6g4m6", "suite_secret": "eii7lhdU_xpvhXiC-LlH3SHNTLTYZnIEtWtM-4hmxPlcoUd8OBNFMJpxDgQ7XVYn", "suite_ticket": "suite_ticket"})
+  const suite_access_token = tokenRes.data.suite_access_token
+  const permanentData = await axios.post(`https://oapi.dingtalk.com/service/get_permanent_code?suite_access_token=${suite_access_token}`, {"tmp_auth_code": tmp_auth_code})
+  console.log(permanentData)
+  const auth_corpid = permanentData.auth_corp_info.auth_corpid
+  const permanent_code = permanentData.permanent_code
+  const res = await axios.post(`https://oapi.dingtalk.com/service/activate_suite?suite_access_token=${suite_access_token}`, {"suite_key":"suite7qgj8mrncxv6g4m6","auth_corpid": auth_corpid,"permanent_code": permanent_code})
   console.log(res)
+  // const permanentData = get_permanent_code(suite_access_token, tmp_auth_code)
+  // const res = activate_suite(suite_access_token, permanentData.permanent_code, permanentData.auth_corp_info.auth_corpid)
+  // console.log(res)
 }
 
 //第三方应用凭证
 async function get_suite_token() {
   const res = await axios.post('https://oapi.dingtalk.com/service/get_suite_token', {"suite_key": "suite7qgj8mrncxv6g4m6", "suite_secret": "eii7lhdU_xpvhXiC-LlH3SHNTLTYZnIEtWtM-4hmxPlcoUd8OBNFMJpxDgQ7XVYn", "suite_ticket": "suite_ticket"})
+  console.log(res.data)
   return res.data.suite_access_token
 }
 

@@ -50,6 +50,7 @@ async function get_suite_token() {
 // 企业永久授权码
 async function get_permanent_code(suite_access_token, tmp_auth_code) {
   const res = await axios.post(`https://oapi.dingtalk.com/service/get_permanent_code?suite_access_token=${suite_access_token}`, {"tmp_auth_code": tmp_auth_code})
+  console.log(res)
   return res.data
 }
 

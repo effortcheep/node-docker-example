@@ -17,16 +17,37 @@ stages:
   jobs:  
   - job: Build
     displayName: Build
-    pool:
-      vmImage: 'ubuntu-latest'
+    pool: mytestpool
     steps:
     - task: Docker@2
-      displayName: Build an image
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
+        containerRegistry: 'testdocker'
+        command: 'login'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'testdocker'
+        repository: '$(Build.Repository.Name)'
+        command: 'build'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'testdocker'
+        repository: '$(Build.Repository.Name)'
+        command: 'push'
+    # - task: Docker@2
+    #   displayName: Build an image
+    #   inputs:
+    #     command: build
+    #     dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+    #     tags: |
+    #       $(tag)
+    # - task: Docker@2
+    #   displayName: Build an image
+    #   inputs:
+    #     command: buildAndPush
+    #     dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+    #     tags: |
+    #       $(tag)
     - task: CopyFiles@2
       inputs:
         targetFolder: '$(Build.ArtifactStagingDirectory)'

@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }))
 app.get('/ttt', (req, res) => {
   test_suite('123')
   res.send({
-    success: 'ok'
+    success: 'ok_v1'
   })
 })
 

@@ -1,5 +1,4 @@
 const express = require('express')
-const aes = require('wx-ding-aes')
 const app = express()
 const crypto = require('crypto');
 const encodingAESKey = "fhpuqnmo6mw3l1gvo030tiy0kvpido2zje4nxu8tpdn"
@@ -20,10 +19,10 @@ app.post('/test', (req, res) => {
     test_suite(param.AuthCode)
   }
   console.log(param)
-  var timeStamp = ""+parseInt(new Date()/1000)
-  var nonce = "aaaaaa"
-  var encrypt = encrypt_text('success', 'fhpuqnmo6mw3l1gvo030tiy0kvpido2zje4nxu8tpdn', 'suite7qgj8mrncxv6g4m6')
-  var token = 'sdfasfssa'
+  const timeStamp = ""+parseInt(new Date()/1000)
+  const nonce = "aaaaaa"
+  const encrypt = encrypt_text('success', 'fhpuqnmo6mw3l1gvo030tiy0kvpido2zje4nxu8tpdn', 'suite7qgj8mrncxv6g4m6')
+  const token = 'sdfasfssa'
   const arr = [timeStamp, nonce, token, encrypt]
   const msg_signature = signature_arr(arr)
   res.send({

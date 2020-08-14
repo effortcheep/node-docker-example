@@ -1,8 +1,8 @@
-FROM node:12.12.0-alpine
+FROM node:latest
 RUN mkdir -p /usr/src/app
 COPY . /usr/src/app
 RUN cd /usr/src/app && npm install
-# RUN npm i -g nodemon
+RUN npm install pm2 -g
 
 EXPOSE 80
-ENTRYPOINT ["node", "/usr/src/app/server.js"]
+CMD ["pm2-runtime", "/usr/src/app/server.js"]
